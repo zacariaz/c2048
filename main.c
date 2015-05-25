@@ -51,7 +51,7 @@ int main(int argc, char* argv[]) {
         mvprintw(0, 0, "+-----------+-----------+-----------+-----------+\n"); 
         for(uint8_t y = 0; y < 4; y++) {
             for(uint8_t n = 0; n < 5; n++) {
-                printw("|%s|%s|%s|%s|\n", font[n][*board[0][y][0]], font[n][*board[0][y][1]], font[n][*board[0][y][2]], font[n][*board[0][y][3]]);
+                printw("|%s|%s|%s|%s|\n", font[n][boardData[y][0]], font[n][boardData[y][1]], font[n][boardData[y][2]], font[n][boardData[y][3]]);
             }
             printw("+-----------+-----------+-----------+-----------+\n");
         }

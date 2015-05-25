@@ -7,7 +7,8 @@
 
 // variable declarations:
 extern uint8_t* board[4][4][4];
-extern uint32_t seed, moves, score;
+extern uint32_t seed, score;
+extern int32_t moves;
 
 // function declaration:
 

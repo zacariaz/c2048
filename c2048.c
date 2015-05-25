@@ -3,7 +3,8 @@
 // variable definitions:
 
 uint8_t* board[4][4][4];
-uint32_t seed, moves, score;
+uint32_t seed, score;
+int32_t moves;
 //function definitions:
 
 void Initialize() {

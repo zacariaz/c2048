@@ -1,5 +1,5 @@
 OBJS = main.o c2048.o
-CC = cc
+CC = gcc
 CFLAGS = -std=c11 -Wall -Wextra -pedantic -Wextra
 LDLIBS = -l ncurses
 

@@ -43,7 +43,7 @@ int main(int argc, char* argv[]) {
                 break;
             case 'n':
             case 'N':
-                SetSeed(time(0));
+                seed = time(0);
                 NewGame();
         }
         
@@ -51,12 +51,12 @@ int main(int argc, char* argv[]) {
         mvprintw(0, 0, "+-----------+-----------+-----------+-----------+\n"); 
         for(uint8_t y = 0; y < 4; y++) {
             for(uint8_t n = 0; n < 5; n++) {
-                printw("|%s|%s|%s|%s|\n", font[n][GetTile(y, 0)], font[n][GetTile(y, 1)], font[n][GetTile(y, 2)], font[n][GetTile(y, 3)]);
+                printw("|%s|%s|%s|%s|\n", font[n][*board[0][y][0]], font[n][*board[0][y][1]], font[n][*board[0][y][2]], font[n][*board[0][y][3]]);
             }
             printw("+-----------+-----------+-----------+-----------+\n");
         }
-        printw("Score: %d\n", GetScore());
-        printw("Moves: %d\n\n", GetMoves());
+        printw("Score: %d\n", score);
+        printw("Moves: %d\n\n", moves);
         printw("Press'n' for new game and 'q' for quits.\nUse the arrow keys or 'a, s, d, w' to play.\n");
         
         // get key;
@@ -64,9 +64,7 @@ int main(int argc, char* argv[]) {
     } while(ch != 'q' && ch != 'Q');
     // end curses.
     endwin();
-    // save game.
+    // save the game before exit.
     SaveGame("save.bin");
-    // clean up.
-    Finalize();
     return 0;
 }

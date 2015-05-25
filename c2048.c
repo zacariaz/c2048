@@ -1,7 +1,7 @@
 #include "c2048.h"
 
 // variable definitions:
-
+uint8_t boardData[4][4];
 uint8_t* board[4][4][4];
 uint32_t seed, score;
 int32_t moves;
@@ -10,13 +10,7 @@ int32_t moves;
 void Initialize() {
     for(uint8_t y = 0; y < 4; y++)
         for(uint8_t x = 0; x < 4; x++)
-            board[3][3-x][y] = board[2][3-y][3-x] = board[1][x][3-y] = board[0][y][x] = malloc(sizeof(uint8_t));
-}
-
-void Finalize() {
-    for(int y = 0;y < 4; y++)
-        for(int x = 0; x < 4; x++)
-            free(board[0][y][x]);
+            board[3][3-x][y] = board[2][3-y][3-x] = board[1][x][3-y] = board[0][y][x] = &boardData[y][x];
 }
 
 void NewGame() {
@@ -119,28 +113,13 @@ uint8_t Move(uint8_t z) {
     return b;
 }
 // Set a specific seed. Should be done prior to calling NewGame().
-void SetSeed(uint32_t n) {
-    seed = n;
-}
-// Return specific square.
-int8_t GetTile(uint8_t y, uint8_t x) {
-    return (y > 3 || x > 3) ? -1 : *board[0][y][x];
-}
-// return score.
-uint32_t GetScore() {
-    return score;
-}
-// Return moves.
-uint32_t GetMoves() {
-    return moves;
-}
 
 uint32_t P2(uint8_t n) {
     return (n < 32) ? (1 << n) : (0);
 }
 
 // Save game
-uint8_t SaveGame(char* fn) {
+uint8_t SaveGame(const char* fn) {
     // Open file...
     FILE* fp = fopen(fn, "wb");
     // If file is open...
@@ -159,7 +138,7 @@ uint8_t SaveGame(char* fn) {
 }
 
 // Load game
-uint8_t LoadGame(char* fn) {
+uint8_t LoadGame(const char* fn) {
     FILE* fp = fopen(fn, "rb");
     if(!fp)
         return 1;

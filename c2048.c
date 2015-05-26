@@ -2,16 +2,31 @@
 
 // variable definitions:
 uint8_t boardData[4][4];
-uint8_t* board[4][4][4];
+uint8_t* board[4][4][4] = {{
+{&boardData[0][0], &boardData[0][1], &boardData[0][2], &boardData[0][3]},
+{&boardData[1][0], &boardData[1][1], &boardData[1][2], &boardData[1][3]},
+{&boardData[2][0], &boardData[2][1], &boardData[2][2], &boardData[2][3]},
+{&boardData[3][0], &boardData[3][1], &boardData[3][2], &boardData[3][3]}
+},{
+{&boardData[3][0], &boardData[2][0], &boardData[1][0], &boardData[0][0]},
+{&boardData[3][1], &boardData[2][1], &boardData[1][1], &boardData[0][1]},
+{&boardData[3][2], &boardData[2][2], &boardData[1][2], &boardData[0][2]},
+{&boardData[3][3], &boardData[2][3], &boardData[1][3], &boardData[0][3]}
+},{
+{&boardData[3][3], &boardData[3][2], &boardData[3][1], &boardData[3][0]},
+{&boardData[2][3], &boardData[2][2], &boardData[2][1], &boardData[2][0]},
+{&boardData[1][3], &boardData[1][2], &boardData[1][1], &boardData[1][0]},
+{&boardData[0][3], &boardData[0][2], &boardData[0][1], &boardData[0][0]}
+},{
+{&boardData[0][3], &boardData[1][3], &boardData[2][3], &boardData[3][3]},
+{&boardData[0][2], &boardData[1][2], &boardData[2][2], &boardData[3][2]},
+{&boardData[0][1], &boardData[1][1], &boardData[2][1], &boardData[3][1]},
+{&boardData[0][0], &boardData[1][0], &boardData[2][0], &boardData[3][0]}
+}};
 uint32_t seed, score;
 int32_t moves;
-//function definitions:
 
-void Initialize() {
-    for(uint8_t y = 0; y < 4; y++)
-        for(uint8_t x = 0; x < 4; x++)
-            board[3][3-x][y] = board[2][3-y][3-x] = board[1][x][3-y] = board[0][y][x] = &boardData[y][x];
-}
+//function definitions:
 
 void NewGame() {
     // Initialize random number generator from seed.

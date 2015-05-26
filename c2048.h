@@ -13,7 +13,7 @@ extern int32_t moves;
 
 // function declaration:
 
-extern void Initialize();
+//extern void Initialize();
 extern void NewGame();
 extern uint8_t NewTile();
 extern uint8_t Move(uint8_t);

@@ -7,7 +7,7 @@
 
 // variable declarations:
 extern uint8_t boardData[4][4];
-extern uint8_t* board[4][4][4];
+extern uint8_t* const board[4][4][4];
 extern uint32_t seed, score;
 extern int32_t moves;
 

@@ -2,7 +2,7 @@
 
 // variable definitions:
 uint8_t boardData[4][4];
-uint8_t* board[4][4][4] = {{
+uint8_t* const board[4][4][4] = {{
 {&boardData[0][0], &boardData[0][1], &boardData[0][2], &boardData[0][3]},
 {&boardData[1][0], &boardData[1][1], &boardData[1][2], &boardData[1][3]},
 {&boardData[2][0], &boardData[2][1], &boardData[2][2], &boardData[2][3]},

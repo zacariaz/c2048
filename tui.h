@@ -6,10 +6,6 @@
 #include <time.h>
 #include <stdint.h>
 
-const char font[5][18][12];
-const char message[24][33];
-
-
-void Run();
+extern void Run();
 
 #endif

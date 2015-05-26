@@ -1,13 +1,13 @@
 #include "tui.h"
 
-const char font[5][18][12] = {
+static const char font[5][18][12] = {
 {"         ","        #","     ####","     ####","     #  #","     ####","     #   ","     ####","     ####","     ####","   # ####","   #    #","   # ####","   # ####","   # #  #","   # ####","   # #   ","   # ####"},
 {"         ","        #","        #","        #","     #  #","     #   ","     #   ","        #","     #  #","     #  #","   # #  #","   #    #","   #    #","   #    #","   # #  #","   # #   ","   # #   ","   #    #"},
 {"         ","        #","     ####","     ####","     ####","     ####","     ####","        #","     ####","     ####","   # #  #","   #    #","   # ####","   # ####","   # ####","   # ####","   # ####","   #    #"},
 {"         ","        #","     #   ","        #","        #","        #","     #  #","        #","     #  #","        #","   # #  #","   #    #","   # #   ","   #    #","   #    #","   #    #","   # #  #","   #    #"},
 {"         ","        #","     ####","     ####","        #","     ####","     ####","        #","     ####","        #","   # ####","   #    #","   # ####","   # ####","   #    #","   # ####","   # ####","   #    #"}};
 
-const char message[24][33] = {
+static const char message[24][33] = {
 "*** C2048 - fork by Zacariaz ***",
 "                                ",
 "The tiles are to be treatsd as  ",
@@ -30,8 +30,8 @@ const char message[24][33] = {
 "                                ",
 "                                ",
 "                                ",
-"Moves                           ",
-"Score                           ",
+"*moves                           ",
+"*score                           ",
 };
 
 void Run() {
@@ -74,17 +74,16 @@ void Run() {
         // print board
         for(uint8_t y = 0; y < 4; y++) {
             for(uint8_t n = 0; n < 5; n++) {
-                if((n  == 4 || n == 0) && !(y == 0 && n == 0) && !(y == 3 && n == 4)) mvprintw(5*y+y+n, 0, "%s | %s | %s | %s", font[n][boardData[y][0]], font[n][boardData[y][1]], font[n][boardData[y][2]], font[n][boardData[y][3]]);
-                else mvprintw(5*y+y+n, 0, "%s   %s   %s   %s", font[n][boardData[y][0]], font[n][boardData[y][1]], font[n][boardData[y][2]], font[n][boardData[y][3]]);
+                if((n  == 4 || n == 0) && !(y == 0 && n == 0) && !(y == 3 && n == 4)) mvprintw(5*y+y+n, 0, "%s | %s | %s | %s", font[n][*board[y][0]], font[n][*board[y][1]], font[n][*board[y][2]], font[n][*board[y][3]]);
+                else mvprintw(5*y+y+n, 0, "%s   %s   %s   %s", font[n][*board[y][0]], font[n][*board[y][1]], font[n][*board[y][2]], font[n][*board[y][3]]);
             }
             if(y != 3) mvprintw(5*y+y+5, 0, "        --+--       --+--       --+--        ");
         }
-         // print message[], score and moves
+         // print message[], *score and *moves
         for(uint8_t y = 0; y < 24; y++ )
             mvprintw(y, 48, "%s", message[y]);
-        mvprintw(22, 64, "%16d", moves);
-        mvprintw(23, 64, "%16d", score);
-        
+        mvprintw(22, 64, "%16d", *moves);
+        mvprintw(23, 64, "%16d", *score);
         
         // get key;
         ch = getch();

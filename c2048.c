@@ -43,29 +43,27 @@ void NewGame() {
 }
 
 uint8_t NewTile() {
-    // Count empty squares.
+    // Count empty squares and save coordinates.
     uint8_t count = 0;
+    struct {
+        uint8_t y, x;
+    } p[16];
     for(uint8_t y = 0; y < 4; y++) 
         for(uint8_t x = 0; x < 4; x++)
-            if(!*board[0][y][x])
+            if(!*board[0][y][x]) {
+                p[count].x = x;
+                p[count].y = y;
                 count++;
+            }
     // If no empty squares, failure. Return 1, else continue.
     if(!count)
         return 1;
     // Initialize c and generate random 1 or 2, with 90% likelyhood of 1.
     uint8_t c = (rand() % 10)?(1):(2);
-    // Generate a random number from 1 to count.
-    count = (rand() % count) + 1;
-    // Run through the board and decrement count for every empty tile.
-    // when count is zero, whe're at the right spot and can assign c.
-    for(uint8_t y = 0; y < 4 && count; y++) {
-        for(uint8_t x = 0; x < 4 && count; x++) {
-            if(!*board[0][y][x])
-                count--;
-            if(!count)
-                *board[0][y][x] = c;
-        }
-    }
+    // Generate a random number from 0 to count-1.
+    count = rand() % count;
+    // Assign 'c' to a random empty tile.
+    *board[0][p[count].y][p[count].x] = c;    
     // Return success.
     return 0;
 }
@@ -88,7 +86,7 @@ uint8_t Move(uint8_t z) {
     for(uint8_t y = 0; y < 4; y++) {
         // A whole lot of testing and moving about. Explanation difficult.
         if(*board[z][y][0] && *board[z][y][0] == *board[z][y][1]) {
-            (*board[z][y][0])++;
+            ++*board[z][y][0];
             score += P2(*board[z][y][0]);
             if(*board[z][y][2] && *board[z][y][2] == *board[z][y][3]) {
                 *board[z][y][1] = *board[z][y][2]+1;
@@ -104,7 +102,7 @@ uint8_t Move(uint8_t z) {
             b = 0;
         }
         else if(*board[z][y][1] && *board[z][y][1] == *board[z][y][2]) {
-            (*board[z][y][1])++;
+            ++*board[z][y][1];
             *board[z][y][2] = *board[z][y][3];
             score += P2(*board[z][y][1]);
             *board[z][y][3] = 0;
@@ -112,7 +110,7 @@ uint8_t Move(uint8_t z) {
             b = 0;
         }
         else if(*board[z][y][2] && *board[z][y][2] == *board[z][y][3]) {
-            (*board[z][y][2])++;
+            ++*board[z][y][2];
             score += P2(*board[z][y][2]);
             *board[z][y][3] = 0;
             // if board has changes, success! Set b to 0.
@@ -127,13 +125,11 @@ uint8_t Move(uint8_t z) {
     // Return success or failure.
     return b;
 }
-// Set a specific seed. Should be done prior to calling NewGame().
-
+// Get 2^n - No need to involve math.h, allthough the safeguard may be overdoing it a bit.
 uint32_t P2(uint8_t n) {
     return (n < 32) ? (1 << n) : (0);
 }
 
-// Save game
 uint8_t SaveGame(const char* fn) {
     // Open file...
     FILE* fp = fopen(fn, "wb");
@@ -152,7 +148,6 @@ uint8_t SaveGame(const char* fn) {
     return 0;
 }
 
-// Load game
 uint8_t LoadGame(const char* fn) {
     FILE* fp = fopen(fn, "rb");
     if(!fp)

@@ -3,12 +3,14 @@
 // variable definitions:
 
 static uint8_t boardData[4][4];
+// initialize safe access.
 const uint8_t* const board[4][4] = {
 {&boardData[0][0], &boardData[0][1], &boardData[0][2], &boardData[0][3]},
 {&boardData[1][0], &boardData[1][1], &boardData[1][2], &boardData[1][3]},
 {&boardData[2][0], &boardData[2][1], &boardData[2][2], &boardData[2][3]},
 {&boardData[3][0], &boardData[3][1], &boardData[3][2], &boardData[3][3]}
 };
+// Initialize rotated boards.
 static uint8_t* const boardPtr[4][4][4] = {{
 {&boardData[0][0], &boardData[0][1], &boardData[0][2], &boardData[0][3]},
 {&boardData[1][0], &boardData[1][1], &boardData[1][2], &boardData[1][3]},
@@ -30,13 +32,13 @@ static uint8_t* const boardPtr[4][4][4] = {{
 {&boardData[0][1], &boardData[1][1], &boardData[2][1], &boardData[3][1]},
 {&boardData[0][0], &boardData[1][0], &boardData[2][0], &boardData[3][0]}
 }};
-uint32_t seed;
+uint32_t seed = 0;
 static uint32_t scoreData;
 static int32_t movesData;
+// Initialize safe access.
 const uint32_t* const score = &scoreData;
 const int32_t* const moves = &movesData;
-// function declerations:
-
+// Static function declerations:
 static uint8_t NewTile();
 static uint32_t P2(uint8_t);
 

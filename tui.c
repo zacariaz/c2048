@@ -10,10 +10,9 @@ static const char font[5][18][12] = {
 
 static const char message[24][33] = {
 "*** C2048 - fork by Zacariaz ***",
-"                                ",
-"The tiles are to be treatsd as  ",
-"exponents. 2^n = tile value.    ",
-"                                ",
+"*                              *",
+"*  github.com/zacariaz/c2048/  *",
+"*                              *",
 "*********** Controls ***********",
 "Arrow keys                      ",
 "w, a, s, d                      ",
@@ -22,17 +21,18 @@ static const char message[24][33] = {
 "                                ",
 "                                ",
 "                                ",
+"********** High Score **********",
+"Score      Best Tile      Moves ",
+"3,932,156  131,072(2^17)  13,138",
 "                                ",
 "                                ",
 "                                ",
 "                                ",
 "                                ",
-"                                ",
-"                                ",
-"                                ",
-"                                ",
-"*moves                           ",
-"*score                           ",
+"********* Current Game *********",
+"Best Tile                       ",
+"Moves                           ",
+"Score                           ",
 };
 
 void Run() {
@@ -69,7 +69,7 @@ void Run() {
                 break;
             case 'n':
             case 'N':
-                seed = time(0);
+                if(!seed) seed = time(0);
                 NewGame();
         }
         // print board
